@@ -1,0 +1,7 @@
+.logo {
+    width: 150px;
+}
+
+.pokemoncard:hover {
+    cursor: pointer;
+}

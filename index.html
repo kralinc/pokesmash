@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <!-- development version, includes helpful console warnings -->
+        <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="icon" type="image/icon" href="favicon.ico">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Index</title>
+    </head>
+
+    <body>
+        <div id="app">
+            <navbar v-bind:smash="smash" v-bind:about="about" v-on:close-smash="smash = false" v-on:reset="reset" v-on:toggle-about="about = !about"></navbar>
+            <div v-if="about" class="container bg-light mb-5">
+                <div class="row">
+                    <div class="col-12 fs-3">
+                        <p class="text-wrap"><a href="https://www.youtube.com/watch?v=gys9oDZj-MY">I saw this Markiplier video</a>
+                            and I thought it would be funny to make it an app. Plus it was an excuse to use vue.</p>
+                        <div class="row text-center">
+                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                                <a href="https://pokeapi.co" target="_blank"><img class="img img-fluid logo" src="https://raw.githubusercontent.com/PokeAPI/media/master/logo/pokeapi_256.png"></a>
+                            </div>
+                            <div class="col-12 col-md-6 d-flex align-items-center justify-content-center">
+                                <a href="https://vuejs.org" target="_blank"><img class="img img-fluid logo" src="https://camo.githubusercontent.com/c8f91d18976e27123643a926a2588b8d931a0292fd0b6532c3155379e8591629/68747470733a2f2f7675656a732e6f72672f696d616765732f6c6f676f2e706e67"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div v-if="smash" class="container">
+                <pokemonpage 
+                v-on:next="onNext"
+                v-bind:pokemon="currentpokemon"
+                ></pokemonpage>
+            </div>
+            <div v-else class="container">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h2 class="fw-bold">You would smash {{smashdata.size}} / 898 pokemon! ({{smashedPercent}})</h2>
+                        <p class="fw-bold">Share your results you freak!</p>
+                        <p @click="selectCode" id="code" class="text-break bg-light p-3 rounded">https://kralinc.github.io/pokesmash?code={{smashdatabase64}}</p>
+                        <div class="input-group">
+                            <span class="input-group-text">Start from</span>
+                            <select id="generationselect" class="form-control mb-2" v-model="generation" placeholder="Start from...">
+                                <option v-for="item of generationdata"
+                                        v-bind:value="item.value"
+                                        :key="item.value">
+                                        {{item.text}}
+                                </option>
+                            </select>
+                            <button class="btn btn-success btn-lg" @click="begin">{{(smashedamount > 0) ? 'Continue!' : 'Start!'}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <pokemoncard
+                        v-for="item in pokemondata"
+                        v-bind:pokemon="item"
+                        v-bind:over="over"
+                        v-bind:smashed="item.smashed"
+                        v-on:goto="goToPokemon"
+                        :key="item.id"
+                    ></pokemoncard>
+                </div>
+            </div>
+        </div>
+        <script src="js/pokevue.js"></script>
+    </body>
+
+</html>
