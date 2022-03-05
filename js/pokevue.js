@@ -169,6 +169,7 @@ var app = new Vue({
     .then(response => response.json())
     .then(data => {
         this.pokemondata = data;
+        this.loadStorage();
         this.loadCode();
       });
     },
@@ -206,6 +207,7 @@ var app = new Vue({
       }else {
         this.currentpokemon = this.pokemondata[this.currentpokemon.id];
       }
+      sessionStorage.setItem("smashdata", [...this.smashdata].join(","));
     },
     startFrom: function(id)
     {
@@ -220,6 +222,7 @@ var app = new Vue({
     },
     reset: function()
     {
+      sessionStorage.clear();
       window.history.pushState({}, document.title, "/");
       this.smashdata = new Set();
       this.currentpokemon = {};
@@ -297,6 +300,18 @@ var app = new Vue({
     selectCode: function()
     {
       window.getSelection().selectAllChildren(document.querySelector("#code"));
+    },
+    loadStorage: function() 
+    {
+      if (sessionStorage.getItem("smashdata") && !window.location.search.includes("code="))
+      {
+        this.smashdata = new Set(sessionStorage.getItem("smashdata").split(","));
+        for (let item of this.smashdata)
+        {
+          this.pokemondata[item - 1].smashed = true;
+        }
+        this.arbitrary = !this.arbitrary;
+      }
     }
   },
   mounted: function() {
