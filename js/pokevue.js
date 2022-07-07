@@ -165,7 +165,7 @@ var app = new Vue({
   methods: {
     generatePokemon: async function() {
         //Data cached from pokeapi.co
-        return fetch("https://kralinc.github.io/pages/pokemondata.json")
+        return fetch("https://www.cactusdan.com/pages/pokemondata.json")
     .then(response => response.json())
     .then(data => {
         this.pokemondata = data;
