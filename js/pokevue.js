@@ -145,6 +145,7 @@ var app = new Vue({
     currentpokemon: {},
     over: false,
     smashedamount: 0,
+    filteredtosmashed: false,
     arbitrary: false
   },
   watch: {
@@ -160,7 +161,11 @@ var app = new Vue({
     smashedPercent: function()
     {
       return (this.smashedamount / this.pokemondata.length * 100).toFixed(2) + "%";
-    }
+    },
+    visiblePokemon: function()
+    {
+      return this.pokemondata.filter((item) => !this.filteredtosmashed || item.smashed);
+    },
   },
   methods: {
     generatePokemon: async function() {

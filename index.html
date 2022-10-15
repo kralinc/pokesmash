@@ -55,11 +55,15 @@
                             </select>
                             <button class="btn btn-success btn-lg" @click="begin">{{(smashedamount > 0) ? 'Continue!' : 'Start!'}}</button>
                         </div>
+                        <div class="form-check form-switch mt-2">
+                            <label class="form-check-label" for="filtersmashed">Filter to Smashed</label>
+                            <input id="filtersmashed" name="filtersmashed" class="form-check-input" type="checkbox" v-model="filteredtosmashed">
+                        </div>
                     </div>
                 </div>
                 <div class="row">
                     <pokemoncard
-                        v-for="item in pokemondata"
+                        v-for="item in visiblePokemon"
                         v-bind:pokemon="item"
                         v-bind:over="over"
                         v-bind:smashed="item.smashed"
