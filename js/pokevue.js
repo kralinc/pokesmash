@@ -8,7 +8,7 @@ Vue.component('pokemoncard', {
     template: `
     <div class="col-6 col-sm-4 col-md-3 col-lg-2 pokemoncard">
         <div class="border rounded-3 m-1 p-2" :style="(smashed) ? 'background-color: #93ebc4' : ''" @click="$emit('goto', pokemon.id)">
-          <img v-bind:id="'img-' + pokemon.id" class="img img-fluid" :src="pokemon.image">
+          <img loading="lazy" v-bind:id="'img-' + pokemon.id" class="img img-fluid" :src="pokemon.image">
           <p class="text-center">#{{pokemon.id}}: {{name}}</p>
         </div>
     </div>`,
